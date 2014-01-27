@@ -30,9 +30,53 @@ shinyServer(function(input, output, session) {
   
     numerics = input$numerics 
     factors = input$factors
-          
-    return(numerics)
+    # TODO: Something to record the order in which numerics and factors are selected
     
+    colfactor = input$colFactor
+    
+    getT1Stat <- function(varname, digits=2){
+      getDescriptionStatsBy(getSelectedDF()[, varname], 
+                            getSelectedDF()[, colfactor], 
+                            add_total_col=TRUE,
+                            show_all_values=TRUE, 
+                            hrzl_prop=TRUE,
+                            statistics=FALSE, 
+                            html=TRUE, 
+                            digits=digits)
+    }
+    
+    # Get the basic stats and store in a list
+    table_data <- list()
+    for (myvar in c(numerics, factors)) {
+      table_data[[myvar]] = getT1Stat(myvar)
+    }
+    
+    # Now merge everything into a matrix
+    # and create the rgroup & n.rgroup variabels
+    rgroup <- c()
+    n.rgroup <- c()
+    output_data <- NULL
+    for (varlabel in names(table_data)){
+      output_data <- rbind(output_data, 
+                           table_data[[varlabel]])
+      rgroup <- c(rgroup, 
+                  varlabel)
+      n.rgroup <- c(n.rgroup, 
+                    nrow(table_data[[varlabel]]))
+    }
+    
+    x = htmlTable(output_data, align="rrrr",
+              rgroup=rgroup, n.rgroup=n.rgroup, 
+              rgroupCSSseparator="", 
+              #cgroup = cgroup,
+              #n.cgroup = n.cgroup,
+              rowlabel="", 
+              caption="Caption", 
+              tfoot="Footer", 
+              ctable=TRUE,
+              output=F)
+    
+    return(x)
   })
   
 })

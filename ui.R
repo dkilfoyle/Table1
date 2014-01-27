@@ -1,5 +1,6 @@
 library(shiny)
 library(shinyAce)
+library(Gmisc)
 source("R/dkdfinfo.r")
 source("R/dkutils.r")
 
@@ -38,19 +39,11 @@ shinyUI(pageWithSidebar(
     div(class="accordion", id ="fieldsAccordion", 
         div(class="accordion-group", id = "fieldsAccordionGroup", 
             buildAccordion("Numerics", selectInput("numerics", "", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", multiple=T), expanded=T),
-            buildAccordion("Factors",  selectInput("factors", "", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T), expanded=T)
+            buildAccordion("Factors",  selectInput("factors", "", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T), expanded=T),
+            buildAccordion("Options", p("Options here"))
         )
     )
   
-#     # clear field selects via client side javascript only
-#     p(
-#       # use actionButton rather than submitButton so that changing the dataframe dropdown automatically updates the field selects
-#       #actionButton("go",strong("Analyse")), 
-#       
-#       HTML("<button class=\"btn\" onclick=\"
-#             $('#numerics').select2('val',''); $('#factors').select2('val',''); 
-#            \">Clear Selections</button>")
-#     )
   ), # end sidebarpanel
 
   mainPanel(
