@@ -37,6 +37,8 @@ shinyServer(function(input, output, session) {
     removedItem = which(!(selectedFields %in% c(input$numerics, input$factors)))
     if (length(removedItem)) selectedFields = selectedFields[-removedItem]
     
+    if (length(selectedFields) == 0) return("Select some fields")
+    
     colfactor = input$colFactor
     
     getT1Stat <- function(varname, digits=2){
@@ -81,7 +83,7 @@ shinyServer(function(input, output, session) {
               ctable=TRUE,
               output=F)
     
-    return(selectedFields)
+    return(x)
   })
   
 })
