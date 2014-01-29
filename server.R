@@ -3,6 +3,8 @@ library(shiny)
 # Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output, session) {
   
+  selectedFields <<- c()
+  
   # Return the requested dataset
   getSelectedDFName <- reactive({
     input$dataset
@@ -27,10 +29,13 @@ shinyServer(function(input, output, session) {
   })
   
   output$Table1 = renderText({
-  
-    numerics = input$numerics 
-    factors = input$factors
-    # TODO: Something to record the order in which numerics and factors are selected
+    
+    # add new selections
+    selectedFields <<- unique(c(selectedFields, input$numerics, input$factors)) #, unique(c(selectedFields, input$factors)))
+    
+    # remove unselections
+    removedItem = which(!(selectedFields %in% c(input$numerics, input$factors)))
+    if (length(removedItem)) selectedFields = selectedFields[-removedItem]
     
     colfactor = input$colFactor
     
@@ -39,7 +44,7 @@ shinyServer(function(input, output, session) {
                             getSelectedDF()[, colfactor], 
                             add_total_col=TRUE,
                             show_all_values=TRUE, 
-                            hrzl_prop=TRUE,
+                            hrzl_prop=T,
                             statistics=FALSE, 
                             html=TRUE, 
                             digits=digits)
@@ -47,7 +52,7 @@ shinyServer(function(input, output, session) {
     
     # Get the basic stats and store in a list
     table_data <- list()
-    for (myvar in c(numerics, factors)) {
+    for (myvar in selectedFields) {
       table_data[[myvar]] = getT1Stat(myvar)
     }
     
@@ -76,7 +81,7 @@ shinyServer(function(input, output, session) {
               ctable=TRUE,
               output=F)
     
-    return(x)
+    return(selectedFields)
   })
   
 })
