@@ -51,7 +51,7 @@ shinyUI(pageWithSidebar(
     includeHTML("www/js/tools.js"),
 
     tabsetPanel(id="mainPanelTabset",
-      tabPanel("Summary", 
+      tabPanel("Table", 
               htmlOutput("Table1")
       ),
       tabPanel("Source",
