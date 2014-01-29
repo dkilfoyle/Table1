@@ -12,5 +12,12 @@ $(document).ready(function() {
   $("#colFactor").select2({ width: 'resolve', placeholder: 'Select factor' }); $("#colFactor").select2Sortable()
   $("#dataset").select2({ width: 'resolve', placeholder: 'Select dataframe' }); $("#dataset").select2Sortable()
 });
-
 </script>
+
+<style>
+.gmisc_table {
+    width:100%;
+    border: 0;
+    outline: 0;
+}
+</style>
