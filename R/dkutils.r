@@ -9,8 +9,9 @@ buildAccordion = function(name, item, expanded=F) {
     div(class="accordion-heading", 
         HTML(paste('<a class="accordion-toggle" data-toggle="collapse" href="#collapse',name,'">',name,'</a>', sep=""))
     ),
+    
     div(id=paste("collapse",name,sep=""), class=paste("accordion-body collapse", inclass),
-        div(class="accordion-inner", item)
+        div(class="accordion-inner", lapply(item, function(x) x))
     )
   )
 }

@@ -40,7 +40,12 @@ shinyUI(pageWithSidebar(
         div(class="accordion-group", id = "fieldsAccordionGroup", 
             buildAccordion("Numerics", selectInput("numerics", "", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", multiple=T), expanded=T),
             buildAccordion("Factors",  selectInput("factors", "", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T), expanded=T),
-            buildAccordion("Options", p("Options here"))
+            buildAccordion("Options", c(
+                           textInput("txtCaption", "Caption"),
+                           textInput("txtCapLoc", "Caption Location", "bottom"),
+                           textInput("txtFooter", "Footer")),
+                           expanded=F
+                           )
         )
     )
   
