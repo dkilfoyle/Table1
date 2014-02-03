@@ -44,10 +44,10 @@ shinyServer(function(input, output, session) {
     getT1Stat <- function(varname, digits=2){
       getDescriptionStatsBy(getSelectedDF()[, varname], 
                             getSelectedDF()[, colfactor], 
-                            add_total_col=TRUE,
+                            add_total_col=input$chkTotals,
                             show_all_values=TRUE, 
                             hrzl_prop=T,
-                            statistics=FALSE, 
+                            statistics=input$chkStatistics, 
                             html=TRUE, 
                             digits=digits)
     }
@@ -78,8 +78,9 @@ shinyServer(function(input, output, session) {
               #cgroup = cgroup,
               #n.cgroup = n.cgroup,
               rowlabel="", 
-              caption="Caption", 
-              tfoot="Footer", 
+              caption=input$txtCaption, 
+              caption.loc = input$txtCapLoc,
+              tfoot=input$txtFooter, 
               ctable=TRUE,
               output=F)
     

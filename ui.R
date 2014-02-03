@@ -33,16 +33,22 @@ shinyUI(pageWithSidebar(
       selectInput("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=F)
       )),
     
-    p(helpText("Now select from below the numerics and factors to include ",
+    wellPanel(
+      p(helpText("Select the numerics and factors to include ",
                "in the rows of the table.")),
+      selectInput("numerics", "Numerics:", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", multiple=T),
+      selectInput("factors", "Factors:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T)
+    ),
     
     div(class="accordion", id ="fieldsAccordion", 
         div(class="accordion-group", id = "fieldsAccordionGroup", 
-            buildAccordion("Numerics", selectInput("numerics", "", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", multiple=T), expanded=T),
-            buildAccordion("Factors",  selectInput("factors", "", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T), expanded=T),
+            #buildAccordion("Numerics", selectInput("numerics", "", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", multiple=T), expanded=T),
+            #buildAccordion("Factors",  selectInput("factors", "", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T), expanded=T),
             buildAccordion("Options", c(
-                           textInput("txtCaption", "Caption"),
-                           textInput("txtCapLoc", "Caption Location", "bottom"),
+                           tagList(checkboxInput("chkStatistics", "Show Statistics", F)),
+                           tagList(checkboxInput("chkTotals", "Show Totals", T)),
+                           tagList(textInput("txtCaption", "Caption")),
+                           textInput("txtCapLoc", "Caption Location", "top"),
                            textInput("txtFooter", "Footer")),
                            expanded=F
                            )

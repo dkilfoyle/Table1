@@ -20,4 +20,9 @@ $(document).ready(function() {
     border: 0;
     outline: 0;
 }
+
+.accordion-heading
+.accordion-toggle {
+  background-color: gainsboro;
+}
 </style>
