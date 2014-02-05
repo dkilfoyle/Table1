@@ -23,6 +23,8 @@ shinyServer(function(input, output, session) {
   observe({
     dfinfo = getdfinfo(input$dataset)
     
+    updateSelectInput(session, "colFactor", "", choices=dfinfo$factors$name, selected="")
+    
     # Update the field selects
     updateSelectInput(session, "numerics", "", choices=dfinfo$numerics$name, selected="")
     updateSelectInput(session, "factors", "", choices=dfinfo$factors$name, selected="")
@@ -49,6 +51,7 @@ shinyServer(function(input, output, session) {
                             hrzl_prop=T,
                             statistics=input$chkStatistics, 
                             html=TRUE, 
+                            NEJMstyle = input$chkNEJM,
                             digits=digits)
     }
     

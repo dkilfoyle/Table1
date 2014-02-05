@@ -42,14 +42,13 @@ shinyUI(pageWithSidebar(
     
     div(class="accordion", id ="fieldsAccordion", 
         div(class="accordion-group", id = "fieldsAccordionGroup", 
-            #buildAccordion("Numerics", selectInput("numerics", "", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", multiple=T), expanded=T),
-            #buildAccordion("Factors",  selectInput("factors", "", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T), expanded=T),
-            buildAccordion("Options", c(
-                           tagList(checkboxInput("chkStatistics", "Show Statistics", F)),
-                           tagList(checkboxInput("chkTotals", "Show Totals", T)),
-                           tagList(textInput("txtCaption", "Caption")),
-                           textInput("txtCapLoc", "Caption Location", "top"),
-                           textInput("txtFooter", "Footer")),
+            buildAccordion("Options", tagList(
+                              checkboxInput("chkStatistics", "Show Statistics", F),
+                              checkboxInput("chkTotals", "Show Totals", T),
+                              checkboxInput("chkNEJM", "NEJM Style", T),
+                              textInput("txtCaption", "Caption:"),
+                              textInput("txtCapLoc", "Caption Location:", "top"),
+                              textInput("txtFooter", "Footer:")),
                            expanded=F
                            )
         )
