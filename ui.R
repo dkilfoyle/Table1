@@ -46,6 +46,7 @@ shinyUI(pageWithSidebar(
                               checkboxInput("chkStatistics", "Show Statistics", F),
                               checkboxInput("chkTotals", "Show Totals", T),
                               checkboxInput("chkNEJM", "NEJM Style", T),
+                              checkboxInput("chkColN", "Column N=", T),
                               textInput("txtCaption", "Caption:"),
                               textInput("txtCapLoc", "Caption Location:", "top"),
                               textInput("txtFooter", "Footer:")),

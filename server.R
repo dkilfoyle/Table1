@@ -42,10 +42,11 @@ shinyServer(function(input, output, session) {
     if (length(selectedFields) == 0) return("Select some fields")
     
     colfactor = input$colFactor
+    curdf = getSelectedDF()
     
     getT1Stat <- function(varname, digits=2){
-      getDescriptionStatsBy(getSelectedDF()[, varname], 
-                            getSelectedDF()[, colfactor], 
+      getDescriptionStatsBy(curdf[, varname], 
+                            curdf[, colfactor], 
                             add_total_col=input$chkTotals,
                             show_all_values=TRUE, 
                             hrzl_prop=T,
@@ -75,11 +76,23 @@ shinyServer(function(input, output, session) {
                     nrow(table_data[[varlabel]]))
     }
     
+    # build N= col headings
+    if (input$chkColN) 
+      headings = sapply(colnames(output_data), function(x) {
+        if (x=="Total")
+          paste0(x, " (n=", nrow(curdf), ")")
+        else
+          paste0(x, " (n=", sum(curdf[, colfactor]==x), ")")
+        })
+    else
+      headings = colnames(output_data)
+    
     x = htmlTable(output_data, align="rrrr",
               rgroup=rgroup, n.rgroup=n.rgroup, 
-              rgroupCSSseparator="", 
+              rgroupCSSseparator="",
               #cgroup = cgroup,
               #n.cgroup = n.cgroup,
+              headings=headings,
               rowlabel="", 
               caption=input$txtCaption, 
               caption.loc = input$txtCapLoc,
