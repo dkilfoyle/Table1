@@ -3,11 +3,11 @@ dkorderedlevelsdec = function(x) {
   names(y)[order(y*-1)]
 }
 
-buildAccordion = function(name, item, expanded=F) {
+buildAccordion = function(label, name, dataparent, item, expanded=F) {
   inclass = ifelse(expanded, "in", "")
-  div(
+  tagList(
     div(class="accordion-heading", 
-        HTML(paste('<a class="accordion-toggle" data-toggle="collapse" href="#collapse',name,'">',name,'</a>', sep=""))
+        HTML(paste('<a class="accordion-toggle" data-toggle="collapse" data-parent="', dataparent, '" href="#collapse',name,'">',label,'</a>', sep=""))
     ),
     
     div(id=paste("collapse",name,sep=""), class=paste("accordion-body collapse", inclass),
