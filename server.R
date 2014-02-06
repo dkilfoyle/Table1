@@ -4,6 +4,8 @@ library(shiny)
 shinyServer(function(input, output, session) {
   
   selectedFields <<- c()
+  colGroups <<- c()
+  n.colGroups <<- c()
   
   # Return the requested dataset
   getSelectedDFName <- reactive({
@@ -23,35 +25,41 @@ shinyServer(function(input, output, session) {
   observe({
     dfinfo = getdfinfo(input$dataset)
     
-    updateSelectInput(session, "colFactor", "", choices=dfinfo$factors$name, selected="")
+    updateSelectInput(session, "colFactor", "", choices=dfinfo$factors$name, selected=dfinfo$factors$name[1])
     
     # Update the field selects
     updateSelectInput(session, "numerics", "", choices=dfinfo$numerics$name, selected="")
     updateSelectInput(session, "factors", "", choices=dfinfo$factors$name, selected="")
   })
   
+  observe({
+    colFactor = input$colFactor
+    
+    # assume we want a total column
+    updateTextInput(session, "txtColGroup", label="Column Groups:", paste0('c("", "', colFactor, '")'))
+    cgroupn = length(levels(getSelectedDF()[, colFactor]))
+    updateTextInput(session, "txtColGroupN", label="Column Groups.n", paste0('c(1, ', cgroupn, ')'))
+  })
+  
   output$Table1 = renderText({
     
     # add new selections
-    selectedFields <<- unique(c(selectedFields, input$numerics, input$factors)) #, unique(c(selectedFields, input$factors)))
+    selectedFields <<- unique(c(selectedFields, input$numerics, input$factors)) 
     
     # remove unselections
     removedItem = which(!(selectedFields %in% c(input$numerics, input$factors)))
     if (length(removedItem)) selectedFields = selectedFields[-removedItem]
     
-    if (length(selectedFields) == 0) return("Select some fields")
+    if (length(selectedFields) == 0) 
+      return("Select some numeric or factor fields from the selection boxs in the left sidebar.")
     
     colfactor = input$colFactor
     curdf = getSelectedDF()
     
     getT1Stat <- function(varname, digits=2){
-      getDescriptionStatsBy(curdf[, varname], 
-                            curdf[, colfactor], 
+      getDescriptionStatsBy(curdf[, varname], curdf[, colfactor], show_all_values=TRUE, hrzl_prop=T, html=TRUE, 
                             add_total_col=input$chkTotals,
-                            show_all_values=TRUE, 
-                            hrzl_prop=T,
                             statistics=input$chkStatistics, 
-                            html=TRUE, 
                             NEJMstyle = input$chkNEJM,
                             digits=digits)
     }
@@ -87,11 +95,22 @@ shinyServer(function(input, output, session) {
     else
       headings = colnames(output_data)
     
-    x = htmlTable(output_data, align="rrrr",
+    
+    if (input$chkColGroups) {
+      cgroup = eval(parse(text=input$txtColGroup))
+      n.cgroup = eval(parse(text=input$txtColGroupN))
+    }
+    else
+    {
+      cgroup = NULL
+      n.cgroup = NULL
+    }
+    
+      x = htmlTable(output_data, align="rrrr",
               rgroup=rgroup, n.rgroup=n.rgroup, 
               rgroupCSSseparator="",
-              #cgroup = cgroup,
-              #n.cgroup = n.cgroup,
+              cgroup = cgroup,
+              n.cgroup = n.cgroup,
               headings=headings,
               rowlabel="", 
               caption=input$txtCaption, 
