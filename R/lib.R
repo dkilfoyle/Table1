@@ -1,6 +1,6 @@
 library(RJSONIO)
 
-spreadsheetInput <- function(inputId = "exampleGrid", value) {
+spreadsheetInput <- function(inputId = "exampleGrid", value, colHeaders="true") {
   
   json_content <- toJSON(value, collapse = "")
   
@@ -16,11 +16,11 @@ spreadsheetInput <- function(inputId = "exampleGrid", value) {
         //always keep at least 1 spare row at the right
         minSpareRows: 1,
         //always keep at least 1 spare row at the bottom,
-        rowHeaders: true,
-        colHeaders: true,
+        rowHeaders: false,
+        colHeaders: %s,
         contextMenu: true
       });
-    });', json_content, inputId)
+    });', json_content, inputId, colHeaders)
 
   tagList(
     singleton(tags$head(tags$script(src = "js/handsontable/jquery.handsontable.full.js", type='text/javascript'))),

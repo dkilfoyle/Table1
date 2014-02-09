@@ -16,7 +16,8 @@ var tableInputBinding = new Shiny.InputBinding();
       
       console.log("hello setvalue", value)
         
-      $(el).handsontable('getInstance'). setDataAtCell( 0, 0, value);
+      //$(el).handsontable('getInstance'). setDataAtCell( 0, 0, value);
+      $(el).handsontable('getInstance').loadData(value)
     },
     
     subscribe: function(el, callback) {
@@ -29,6 +30,7 @@ var tableInputBinding = new Shiny.InputBinding();
     
     receiveMessage: function(el, data) {
       console.log("tableInputBinding.receiveMessage")
+      console.log(data)
       if (data.hasOwnProperty('value'))
         this.setValue(el, data.value);
 

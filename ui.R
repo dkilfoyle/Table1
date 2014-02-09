@@ -50,7 +50,7 @@ shinyUI(pageWithSidebar(
                               checkboxInput("chkNEJM", "NEJM Style", T),
                               checkboxInput("chkColN", "Column N=", T),
                               checkboxInput("chkColGroups", "Use Column Groups", F),
-                              spreadsheetInput("gridTest", list(x=c(1,2,3,4,5))),
+                              spreadsheetInput("gridTest","", colHeaders='["Name","Group","Justify"]'),
                               p(),
                               helpText("Enter column group titles in the textbox below. 
                                        Use empty string for no Column Group. 

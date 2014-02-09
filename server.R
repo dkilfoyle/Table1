@@ -31,7 +31,7 @@ shinyServer(function(input, output, session) {
     updateSelectInput(session, "numerics", "", choices=dfinfo$numerics$name, selected="")
     updateSelectInput(session, "factors", "", choices=dfinfo$factors$name, selected="")
     
-    session$sendInputMessage("gridTest", list(value=5))
+    session$sendInputMessage("gridTest", list(value=matrix(c(1,2,3,"A","B","C"),3,2,byrow=F)))
   })
   
   observe({
