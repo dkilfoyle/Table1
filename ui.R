@@ -3,6 +3,7 @@ library(shinyAce)
 library(Gmisc)
 source("R/dkdfinfo.r")
 source("R/dkutils.r")
+source("R/lib.r")
 
 # to run
 # shiny:::runApp("../Table1")
@@ -48,6 +49,7 @@ shinyUI(pageWithSidebar(
                               checkboxInput("chkNEJM", "NEJM Style", T),
                               checkboxInput("chkColN", "Column N=", T),
                               checkboxInput("chkColGroups", "Use Column Groups", F),
+                              spreadsheetInput("gridTest", data.frame(x=c(1,2,3,4))),
                               p(),
                               helpText("Enter column group titles in the textbox below. 
                                        Use empty string for no Column Group. 
