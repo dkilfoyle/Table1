@@ -30,6 +30,8 @@ shinyServer(function(input, output, session) {
     # Update the field selects
     updateSelectInput(session, "numerics", "", choices=dfinfo$numerics$name, selected="")
     updateSelectInput(session, "factors", "", choices=dfinfo$factors$name, selected="")
+    
+    session$sendInputMessage("gridTest", list(value=5))
   })
   
   observe({

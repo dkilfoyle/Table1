@@ -1,17 +1,5 @@
 library(RJSONIO)
 
-
-# example from increment button
-# incrementButton <- function(inputId, value = 0) {
-#   tagList(
-#     singleton(tags$head(tags$script(src = "increment.js"))),
-#     tags$button(id = inputId,
-#                 class = "increment btn",
-#                 type = "button",
-#                 as.character(value))
-#   )
-# }
-
 spreadsheetInput <- function(inputId = "exampleGrid", value) {
   
   json_content <- toJSON(value, collapse = "")

@@ -1,6 +1,7 @@
 library(shiny)
 library(shinyAce)
 library(Gmisc)
+library(RJSONIO)
 source("R/dkdfinfo.r")
 source("R/dkutils.r")
 source("R/lib.r")
@@ -49,7 +50,7 @@ shinyUI(pageWithSidebar(
                               checkboxInput("chkNEJM", "NEJM Style", T),
                               checkboxInput("chkColN", "Column N=", T),
                               checkboxInput("chkColGroups", "Use Column Groups", F),
-                              spreadsheetInput("gridTest", data.frame(x=c(1,2,3,4))),
+                              spreadsheetInput("gridTest", list(x=c(1,2,3,4,5))),
                               p(),
                               helpText("Enter column group titles in the textbox below. 
                                        Use empty string for no Column Group. 

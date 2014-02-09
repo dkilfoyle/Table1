@@ -2,7 +2,7 @@ var tableInputBinding = new Shiny.InputBinding();
   $.extend(tableInputBinding, {
     
     find: function(scope) {
-      return scope.find('.dataTable');
+      return $(scope).find('.dataTable');
     },
     
     getValue: function(el) {
@@ -14,15 +14,9 @@ var tableInputBinding = new Shiny.InputBinding();
     
     setValue: function(el, value) {
       
-      var newData = [
-        ["Year2", "Kia2", "Nissan2", "Toyota2", "Honda2"],
-        ["2008", 10, 11, 12, 13],
-        ["2009", 20, 11, 14, 13],
-        ["2010", 30, 15, 12, 13]
-        ];
+      console.log("hello setvalue", value)
         
-        
-      $(el).handsontable('setData', newData);
+      $(el).handsontable('getInstance'). setDataAtCell( 0, 0, value);
     },
     
     subscribe: function(el, callback) {
@@ -31,6 +25,14 @@ var tableInputBinding = new Shiny.InputBinding();
     
     unsubscribe: function(el) {
       $(el).off('.tableInputBinding')
+    },
+    
+    receiveMessage: function(el, data) {
+      console.log("tableInputBinding.receiveMessage")
+      if (data.hasOwnProperty('value'))
+        this.setValue(el, data.value);
+
+      $(el).trigger('change');
     }
   });
   
