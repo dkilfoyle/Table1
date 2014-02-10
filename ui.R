@@ -48,19 +48,22 @@ shinyUI(pageWithSidebar(
                               checkboxInput("chkStatistics", "Show Statistics", F),
                               checkboxInput("chkTotals", "Show Total Column", T),
                               checkboxInput("chkNEJM", "NEJM Style", T),
-                              checkboxInput("chkColN", "Column N=", T),
-                              checkboxInput("chkColGroups", "Use Column Groups", F),
-                              spreadsheetInput("gridTest","", colHeaders='["Name","Group","Justify"]'),
-                              p(),
-                              helpText("Enter column group titles in the textbox below. 
-                                       Use empty string for no Column Group. 
-                                       Specify how many columns each title spans in the Column Groups.n text box
-                                       Don't forget to account for the total column if present."),
-                              textInput("txtColGroup", "Column Group:"),
-                              textInput("txtColGroupN", "Column Group.n:")),
-                           expanded=F),
+                              checkboxInput("chkColN", "N= in column header", T)
+
+#                               checkboxInput("chkColGroups", "Use Column Groups", F),
+#                               p(),
+#                               helpText("Enter column group titles in the textbox below. 
+#                                        Use empty string for no Column Group. 
+#                                        Specify how many columns each title spans in the Column Groups.n text box
+#                                        Don't forget to account for the total column if present."),
+#                               textInput("txtColGroup", "Column Group:"),
+#                               textInput("txtColGroupN", "Column Group.n:")
+                              ),
+                           expanded=T),
             buildAccordion("Row Options", "rowoptions", "", tagList(
-                              textInput("txtDigits", "Digits:")),
+                              spreadsheetInput("tblRowOptions", rbind(c("","","")), colHeaders='["Name","Group","Digits"]')
+#                               textInput("txtDigits", "Digits:")
+                            ),
                            expanded=F),
             buildAccordion("Table Options", "tableoptoins", "", tagList(
                               textInput("txtCaption", "Caption:"),

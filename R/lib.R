@@ -12,9 +12,9 @@ spreadsheetInput <- function(inputId = "exampleGrid", value, colHeaders="true") 
         data: myData,
         startRows: 5,
         startCols: 5,
-        minSpareCols: 1,
+        minSpareCols: 0,
         //always keep at least 1 spare row at the right
-        minSpareRows: 1,
+        minSpareRows: 0,
         //always keep at least 1 spare row at the bottom,
         rowHeaders: false,
         colHeaders: %s,
