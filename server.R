@@ -3,7 +3,6 @@ library(shiny)
 # Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output, session) {
   
-  selectedFields <<- rbind()
   colGroups <<- c()
   n.colGroups <<- c()
   
@@ -44,34 +43,37 @@ shinyServer(function(input, output, session) {
     session$sendInputMessage("tblColOptions", list(value=""))
   })
   
-  observe({
-    input$tblRowOptions
+  getSelectedFields = reactive({
+    selectedFields = rbind()
     
-    print("row options changed")
+    # first get the current selections from the handsontable
+    if (!is.null(input$tblRowOptions))
+      for (x in fromJSON(input$tblRowOptions)) selectedFields = rbind(selectedFields, x)
+    
+    # add new selections from the field lists
+    newSelection = which(!(c(input$numerics, input$factors) %in% selectedFields[,1]))
+    if (length(newSelection))
+      selectedFields = rbind(selectedFields, c(c(input$numerics, input$factors)[newSelection], "", "2"))
+      
+    # remove unselections
+    removedItem = which(!(selectedFields[,1] %in% c(input$numerics, input$factors)))
+    if (length(removedItem))
+      selectedFields = rbind(selectedFields[-removedItem, ])
+    
+    # update tblRowOptions
+    if (length(selectedFields) == 0) {
+      session$sendInputMessage("tblRowOptions", list(value=rbind(c("","",""))))
+      selectedFields = rbind()
+    }
+    else
+      session$sendInputMessage("tblRowOptions", list(value=selectedFields))
+
+    return(selectedFields)
   })
   
   output$Table1 = renderText({
     
-    # TODO: store selections in the handsontable only, not in selectedFields???
-    
-    # add new selections
-    newSelection = which(!(c(input$numerics, input$factors) %in% selectedFields[,1]))
-    if (length(newSelection)) {
-      selectedFields <<- rbind(selectedFields, c(c(input$numerics, input$factors)[newSelection], "", "2"))
-      session$sendInputMessage("tblRowOptions", list(value=selectedFields))
-    }
-    
-    # remove unselections
-    removedItem = which(!(selectedFields[,1] %in% c(input$numerics, input$factors)))
-    if (length(removedItem)) {
-      selectedFields <<- rbind(selectedFields[-removedItem, ])
-      if (length(selectedFields) == 0) {
-        session$sendInputMessage("tblRowOptions", list(value=rbind(c("","",""))))
-        selectedFields <<- rbind()
-      }
-      else
-        session$sendInputMessage("tblRowOptions", list(value=selectedFields))
-    }
+    selectedFields = getSelectedFields()
     
     if (is.null(selectedFields)) 
       return("Select some numeric or factor fields from the selection boxs in the left sidebar.")
