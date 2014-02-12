@@ -53,7 +53,7 @@ shinyServer(function(input, output, session) {
     # add new selections from the field lists
     newSelection = which(!(c(input$numerics, input$factors) %in% selectedFields[,1]))
     if (length(newSelection))
-      selectedFields = rbind(selectedFields, c(c(input$numerics, input$factors)[newSelection], "", "2"))
+      selectedFields = rbind(selectedFields, c(c(input$numerics, input$factors)[newSelection], "2"))
       
     # remove unselections
     removedItem = which(!(selectedFields[,1] %in% c(input$numerics, input$factors)))
@@ -62,7 +62,7 @@ shinyServer(function(input, output, session) {
     
     # update tblRowOptions
     if (length(selectedFields) == 0) {
-      session$sendInputMessage("tblRowOptions", list(value=rbind(c("","",""))))
+      session$sendInputMessage("tblRowOptions", list(value=rbind(c("",""))))
       selectedFields = rbind()
     }
     else
@@ -92,7 +92,7 @@ shinyServer(function(input, output, session) {
     # Get the basic stats and store in a list
     table_data <- list()
     for (i in 1:nrow(selectedFields)) {
-      table_data[[ selectedFields[i,1] ]] = getT1Stat(selectedFields[i,1], as.integer(selectedFields[i,3]))
+      table_data[[ selectedFields[i,1] ]] = getT1Stat(selectedFields[i,1], as.integer(selectedFields[i,2]))
     }
     
     # Now merge everything into a matrix
@@ -130,6 +130,10 @@ shinyServer(function(input, output, session) {
       cgroup = NULL
       n.cgroup = NULL
     }
+    
+    #if (input$chkTotals) align="l" else align=""
+    #for (i in 1:nrow(selectedFields))
+    #  align = paste0(align, selectedFields[i,2])
     
       x = htmlTable(output_data, align="rrrr",
               rgroup=rgroup, n.rgroup=n.rgroup, 

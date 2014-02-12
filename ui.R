@@ -47,7 +47,7 @@ shinyUI(pageWithSidebar(
             buildAccordion("Column Options", "coloptions", "", tagList(
                               checkboxInput("chkStatistics", "Show Statistics", F),
                               checkboxInput("chkTotals", "Show Total Column", T),
-                              checkboxInput("chkNEJM", "NEJM Style", T),
+                              checkboxInput("chkNEJM", "NEJM Style n (%)", T),
                               checkboxInput("chkColN", "N= in column header", T)
 
 #                               checkboxInput("chkColGroups", "Use Column Groups", F),
@@ -61,7 +61,7 @@ shinyUI(pageWithSidebar(
                               ),
                            expanded=T),
             buildAccordion("Row Options", "rowoptions", "", tagList(
-                              spreadsheetInput("tblRowOptions", rbind(c("","","")), colHeaders='["Name","Group","Digits"]')
+                              spreadsheetInput("tblRowOptions", rbind(c("","")), colHeaders='["Name","Digits"]')
 #                               textInput("txtDigits", "Digits:")
                             ),
                            expanded=F),
