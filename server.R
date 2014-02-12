@@ -36,11 +36,16 @@ shinyServer(function(input, output, session) {
     colFactor = input$colFactor
     
     # assume we want a total column
-    updateTextInput(session, "txtColGroup", label="Column Groups:", paste0('c("", "', colFactor, '")'))
-    cgroupn = length(levels(getSelectedDF()[, colFactor]))
-    updateTextInput(session, "txtColGroupN", label="Column Groups.n", paste0('c(1, ', cgroupn, ')'))
+    #updateTextInput(session, "txtColGroup", label="Column Groups:", paste0('c("", "', colFactor, '")'))
+    #cgroupn = length(levels(getSelectedDF()[, colFactor]))
+    #updateTextInput(session, "txtColGroupN", label="Column Groups.n", paste0('c(1, ', cgroupn, ')'))
     
-    session$sendInputMessage("tblColOptions", list(value=""))
+    colOptions = rbind()
+    for (x in levels(getSelectedDF()[, colFactor])) {
+      colOptions = rbind(colOptions, c(x, "c", ""))
+    }
+    
+    session$sendInputMessage("tblColOptions", list(value=colOptions))
   })
   
   getSelectedFields = reactive({
@@ -71,9 +76,21 @@ shinyServer(function(input, output, session) {
     return(selectedFields)
   })
   
+  getColOptions = reactive({
+    colOptions = rbind()
+    
+    # first get the current optionsselections from the handsontable
+    if (!is.null(input$tblColOptions))
+      for (x in fromJSON(input$tblColOptions)) colOptions = rbind(colOptions, x)
+    
+    return(colOptions)
+    
+  })
+  
   output$Table1 = renderText({
     
     selectedFields = getSelectedFields()
+    colOptions = getColOptions()
     
     if (is.null(selectedFields)) 
       return("Select some numeric or factor fields from the selection boxs in the left sidebar.")
@@ -131,11 +148,31 @@ shinyServer(function(input, output, session) {
       n.cgroup = NULL
     }
     
-    #if (input$chkTotals) align="l" else align=""
-    #for (i in 1:nrow(selectedFields))
-    #  align = paste0(align, selectedFields[i,2])
+    # build cgroup from colOptions
+    cgroup=c("")
+    n.cgroup=c(0)
+    if (input$chkTotals) n.cgroup=c(1)
+
+    for (i in 1:nrow(colOptions)) {
+      if (colOptions[i,3] == cgroup[length(cgroup)]) # if curgroup same as the last one 
+        n.cgroup[length(n.cgroup)] = n.cgroup[length(n.cgroup)]+1
+      else {
+        n.cgroup = c(n.cgroup, 1)
+        cgroup = c(cgroup, colOptions[i,3])
+      }
+    }
     
-      x = htmlTable(output_data, align="rrrr",
+    if (all(cgroup==c(""))) cgroup=NULL
+    
+    print(cgroup)
+    print(n.cgroup)
+    
+    # build column alignment from colOptions
+    if (input$chkTotals) align="c" else align=""
+    for (i in 1:nrow(colOptions))
+      align = paste0(align, colOptions[i,2])
+    
+      x = htmlTable(output_data, align=align,
               rgroup=rgroup, n.rgroup=n.rgroup, 
               rgroupCSSseparator="",
               cgroup = cgroup,

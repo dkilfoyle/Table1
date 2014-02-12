@@ -48,7 +48,9 @@ shinyUI(pageWithSidebar(
                               checkboxInput("chkStatistics", "Show Statistics", F),
                               checkboxInput("chkTotals", "Show Total Column", T),
                               checkboxInput("chkNEJM", "NEJM Style n (%)", T),
-                              checkboxInput("chkColN", "N= in column header", T)
+                              checkboxInput("chkColN", "N= in column header", T),
+                              p(),
+                              spreadsheetInput("tblColOptions", rbind(c("","","")), colHeaders='["Name","Justify","Group"]')
 
 #                               checkboxInput("chkColGroups", "Use Column Groups", F),
 #                               p(),
