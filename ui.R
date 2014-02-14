@@ -1,6 +1,6 @@
 library(shiny)
 library(shinyAce)
-library(Gmisc)
+library(Gmisc, quietly=T)
 library(RJSONIO)
 source("R/dkdfinfo.r")
 source("R/dkutils.r")
@@ -51,15 +51,6 @@ shinyUI(pageWithSidebar(
                               checkboxInput("chkColN", "N= in column header", T),
                               p(),
                               spreadsheetInput("tblColOptions", rbind(c("","","")), colHeaders='["Name","Justify","Group"]')
-
-#                               checkboxInput("chkColGroups", "Use Column Groups", F),
-#                               p(),
-#                               helpText("Enter column group titles in the textbox below. 
-#                                        Use empty string for no Column Group. 
-#                                        Specify how many columns each title spans in the Column Groups.n text box
-#                                        Don't forget to account for the total column if present."),
-#                               textInput("txtColGroup", "Column Group:"),
-#                               textInput("txtColGroupN", "Column Group.n:")
                               ),
                            expanded=T),
             buildAccordion("Row Options", "rowoptions", "", tagList(

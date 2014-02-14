@@ -1,4 +1,5 @@
 library(shiny)
+library(whisker)
 
 # Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output, session) {
@@ -34,11 +35,6 @@ shinyServer(function(input, output, session) {
   # if the column factor selection is changed....
   observe({
     colFactor = input$colFactor
-    
-    # assume we want a total column
-    #updateTextInput(session, "txtColGroup", label="Column Groups:", paste0('c("", "', colFactor, '")'))
-    #cgroupn = length(levels(getSelectedDF()[, colFactor]))
-    #updateTextInput(session, "txtColGroupN", label="Column Groups.n", paste0('c(1, ', cgroupn, ')'))
     
     colOptions = rbind()
     for (x in levels(getSelectedDF()[, colFactor])) {
@@ -100,10 +96,8 @@ shinyServer(function(input, output, session) {
     
     getT1Stat <- function(varname, digits=2){
       getDescriptionStatsBy(curdf[, varname], curdf[, colfactor], show_all_values=TRUE, hrzl_prop=T, html=TRUE, 
-                            add_total_col=input$chkTotals,
-                            statistics=input$chkStatistics, 
-                            NEJMstyle = input$chkNEJM,
-                            digits=digits)
+                            add_total_col=input$chkTotals, statistics=input$chkStatistics, 
+                            NEJMstyle = input$chkNEJM, digits=digits)
     }
     
     # Get the basic stats and store in a list
@@ -118,12 +112,9 @@ shinyServer(function(input, output, session) {
     n.rgroup <- c()
     output_data <- NULL
     for (varlabel in names(table_data)){
-      output_data <- rbind(output_data, 
-                           table_data[[varlabel]])
-      rgroup <- c(rgroup, 
-                  varlabel)
-      n.rgroup <- c(n.rgroup, 
-                    nrow(table_data[[varlabel]]))
+      output_data <- rbind(output_data, table_data[[varlabel]])
+      rgroup <- c(rgroup, varlabel)
+      n.rgroup <- c(n.rgroup, nrow(table_data[[varlabel]]))
     }
     
     # build N= col headings
@@ -136,17 +127,6 @@ shinyServer(function(input, output, session) {
         })
     else
       headings = colnames(output_data)
-    
-    
-    if (F) { #if (input$chkColGroups) {
-      cgroup = eval(parse(text=input$txtColGroup))
-      n.cgroup = eval(parse(text=input$txtColGroupN))
-    }
-    else
-    {
-      cgroup = NULL
-      n.cgroup = NULL
-    }
     
     # build cgroup from colOptions
     cgroup=c("")
@@ -163,9 +143,6 @@ shinyServer(function(input, output, session) {
     }
     
     if (all(cgroup==c(""))) cgroup=NULL
-    
-    print(cgroup)
-    print(n.cgroup)
     
     # build column alignment from colOptions
     if (input$chkTotals) align="c" else align=""
@@ -184,6 +161,29 @@ shinyServer(function(input, output, session) {
               tfoot=input$txtFooter, 
               ctable=TRUE,
               output=F)
+    
+    template = paste(readLines("table1.template"), collapse="\n")
+    whiskerdata = list(
+      chkTotals = input$chkTotals,
+      chkStatistics = input$chkStatistics,
+      chkNEJM = input$chkNEJM,
+      curdf = input$dataset,
+      colfactor = input$colFactor,
+      rgroup = deparse(rgroup),
+      nrgroup = deparse(n.rgroup),
+      headings = paste(deparse(as.vector(headings)), collapse=""),
+      align = deparse(align),
+      caption = input$txtCaption,
+      caption.loc = input$txtCapLoc,
+      tfoot = input$txtFooter,
+      cgroup = deparse(cgroup),
+      ncgroup = deparse(n.cgroup),
+      selectedFields = list()
+      )
+    
+    observe({
+      updateAceEditor(session, "acer", value = whisker.render(template, whiskerdata), mode="r")
+    })
     
     return(x)
   })
