@@ -55,7 +55,6 @@ shinyUI(pageWithSidebar(
                            expanded=T),
             buildAccordion("Row Options", "rowoptions", "", tagList(
                               spreadsheetInput("tblRowOptions", rbind(c("","")), colHeaders='["Name","Digits"]')
-#                               textInput("txtDigits", "Digits:")
                             ),
                            expanded=F),
             buildAccordion("Table Options", "tableoptoins", "", tagList(

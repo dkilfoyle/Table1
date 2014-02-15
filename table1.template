@@ -1,20 +1,11 @@
-getT1Stat <- function(varname, digits=2){
-  getDescriptionStatsBy({{curdf}}[, varname], {{curdf}}[, "{{colfactor}}"], show_all_values=TRUE, hrzl_prop=T, html=TRUE, 
-                        add_total_col={{chkTotals}}, statistics={{chkStatistics}}, NEJMstyle = {{chkNEJM}}, digits=digits)
-}
+selectedFields = {{{selectedFields}}}
+colOptions = {{{colOptions}}}
 
-# Get the basic stats and store in a list
-table_data = list()
-{{#selectedFields}}
-  table_data[[ "{{fieldName}}" ]] = getT1Stat("{{fieldName}}", {{fieldDigits}})
-{{/selectedFields}}
-
-x = htmlTable(output_data, 
-              headings={{{headings}}},
-              align={{{align}}},
-              rgroup={{{rgroup}}}, n.rgroup={{{nrgroup}}}, 
-              cgroup = {{{cgroup}}}, n.cgroup = {{{ncgroup}}},
-              caption="{{txtCaption}}", 
-              caption.loc = "{{txtCapLoc}}",
-              tfoot="{{txtFooter}}", 
-              ctable=TRUE, output=F)
+x = table1({{curdf}}, "{{colfactor}}", selectedFields, colOptions, 
+           add_total_col = {{add_total_col}},
+           statistics = {{statistics}},
+           NEJMstyle = {{NEJMstyle}},
+           colN = {{colN}},
+           caption="{{{caption}}", 
+           caption.loc = "{{captionloc}}",
+           tfoot="{{tfoot}}")
