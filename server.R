@@ -49,12 +49,12 @@ shinyServer(function(input, output, session) {
     
     # first get the current selections from the handsontable
     if (!is.null(input$tblRowOptions))
-      for (x in fromJSON(input$tblRowOptions)) selectedFields = rbind(selectedFields, x)
+      for (x in fromJSON(input$tblRowOptions)) selectedFields = rbind(selectedFields, x, deparse.level=0)
     
     # add new selections from the field lists
     newSelection = which(!(c(input$numerics, input$factors) %in% selectedFields[,1]))
     if (length(newSelection))
-      selectedFields = rbind(selectedFields, c(c(input$numerics, input$factors)[newSelection], "2"))
+      selectedFields = rbind(selectedFields, c(c(input$numerics, input$factors)[newSelection], "2"), deparse.level=0)
       
     # remove unselections
     removedItem = which(!(selectedFields[,1] %in% c(input$numerics, input$factors)))
@@ -77,7 +77,7 @@ shinyServer(function(input, output, session) {
     
     # first get the current optionsselections from the handsontable
     if (!is.null(input$tblColOptions))
-      for (x in fromJSON(input$tblColOptions)) colOptions = rbind(colOptions, x)
+      for (x in fromJSON(input$tblColOptions)) colOptions = rbind(colOptions, x, deparse.level=0)
     
     return(colOptions)
     
@@ -86,6 +86,7 @@ shinyServer(function(input, output, session) {
   output$Table1 = renderText({
     
     selectedFields = getSelectedFields()
+    rownames(selectedFields) = NULL
     colOptions = getColOptions()
     
     if (is.null(selectedFields)) 
@@ -104,22 +105,25 @@ shinyServer(function(input, output, session) {
                tfoot = input$txtFooter
                )
     
-    template = paste(readLines("table1.template"), collapse="\n")
-    whiskerdata = list(
-      add_total_col = input$chkTotals,
-      statistics = input$chkStatistics,
-      NEJMstyle = input$chkNEJM,
-      curdf = input$dataset,
-      colfactor = input$colFactor,
-      caption = input$txtCaption,
-      captionloc = input$txtCapLoc,
-      tfoot = input$txtFooter,
-      selectedFields = paste(deparse(selectedFields), collapse=""),
-      colOptions = paste(deparse(colOptions), collapse=""),
-      colN = input$chkColN
-      )
-    
     observe({
+      # hmm, ugly hack but works - a reactive dependency on selectedFields and coloptions
+      # this allows to update source if fields changed even when output$table1 not visible
+      selectedFields = getSelectedFields()
+      colOptions = getColOptions()
+      template = paste(readLines("table1.template"), collapse="\n")
+      whiskerdata = list(
+        add_total_col = input$chkTotals,
+        statistics = input$chkStatistics,
+        NEJMstyle = input$chkNEJM,
+        curdf = input$dataset,
+        colfactor = input$colFactor,
+        caption = input$txtCaption,
+        captionloc = input$txtCapLoc,
+        tfoot = input$txtFooter,
+        selectedFields = paste(deparse(selectedFields), collapse=""),
+        colOptions = paste(deparse(colOptions), collapse=""),
+        colN = input$chkColN
+      )
       updateAceEditor(session, "acer", value = whisker.render(template, whiskerdata), mode="r")
     })
     
