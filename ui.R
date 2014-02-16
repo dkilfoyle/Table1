@@ -20,6 +20,8 @@ shinyUI(pageWithSidebar(
   
   sidebarPanel(
     
+    includeCSS("www/table1.css"),
+    
     h2("Table1"),
     
     p("An interface to the Gmisc htmlTable function"),
@@ -32,7 +34,7 @@ shinyUI(pageWithSidebar(
       p(helpText("Select the factor variable that will produce the columns, ",
                  "typically the Cases vs Controls ID var."
                  ),
-      selectInput("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", placeholder="Select Factor", multiple=F)
+      select2Input("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", placeholder="Select Factor", multiple=F)
       )),
     
     wellPanel(
@@ -70,8 +72,6 @@ shinyUI(pageWithSidebar(
 
   mainPanel(
     
-    includeHTML("www/js/tools.js"),
-
     tabsetPanel(id="mainPanelTabset",
       tabPanel("Table", 
               htmlOutput("Table1")
