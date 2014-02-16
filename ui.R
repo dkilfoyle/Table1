@@ -7,7 +7,7 @@ source("R/dkutils.r")
 source("R/lib.r")
 
 # to run
-# shiny:::runApp("../Table1")
+# shiny:::runApp()
 # shiny:::runApp("../Table1", launch.browser = rstudio::viewer)
 
 data(iris)
@@ -34,7 +34,7 @@ shinyUI(pageWithSidebar(
       p(helpText("Select the factor variable that will produce the columns, ",
                  "typically the Cases vs Controls ID var."
                  ),
-      select2Input("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", placeholder="Select Factor", multiple=F)
+      select2Input("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="",  multiple=F)
       )),
     
     wellPanel(

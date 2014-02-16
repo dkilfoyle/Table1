@@ -13,7 +13,7 @@ shinyServer(function(input, output, session) {
   })
   
   getSelectedDF <- reactive({
-    eval(parse(text=getSelectedDFName()))
+    eval(parse(text=input$dataset))
   })
   
   getDFInfo <- reactive({
@@ -22,26 +22,29 @@ shinyServer(function(input, output, session) {
   
   # use observe to connect a change in input$dataset to the select boxes
   observe({
-    dfinfo = getdfinfo(input$dataset)
+    dfinfo = getDFInfo()
     
+    # update colFactor
     updateSelectInput(session, "colFactor", "", choices=dfinfo$factors$name, selected=dfinfo$factors$name[1])
     
     # Update the field selects
     updateSelectInput(session, "numerics", "", choices=dfinfo$numerics$name, selected="")
     updateSelectInput(session, "factors", "", choices=dfinfo$factors$name, selected="")
-  
-  })
+    
+  }, priority=1)
   
   # if the column factor selection is changed....
   observe({
+    isolate({curdf = getSelectedDF()}) # use isolate to avoid circular reactivity
     colFactor = input$colFactor
     
     colOptions = rbind()
-    for (x in levels(getSelectedDF()[, colFactor])) {
+    for (x in levels(curdf[, colFactor])) {
       colOptions = rbind(colOptions, c(x, "c", ""))
     }
     
     session$sendInputMessage("tblColOptions", list(value=colOptions))
+
   })
   
   getSelectedFields = reactive({
