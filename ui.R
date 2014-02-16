@@ -25,21 +25,21 @@ shinyUI(pageWithSidebar(
     p("An interface to the Gmisc htmlTable function"),
     
     wellPanel(
-      selectInput("dataset", "Dataframe:", choices = getDataFrames())
+      select2Input("dataset", "Dataframe:", choices = getDataFrames(), placeholder="Select Dataframe")
     ),
     
     wellPanel(
       p(helpText("Select the factor variable that will produce the columns, ",
                  "typically the Cases vs Controls ID var."
                  ),
-      selectInput("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=F)
+      selectInput("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", placeholder="Select Factor", multiple=F)
       )),
     
     wellPanel(
       p(helpText("Select the numerics and factors to include ",
                "in the rows of the table.")),
-      selectInput("numerics", "Numerics:", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", multiple=T),
-      selectInput("factors", "Factors:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T)
+      select2Input("numerics", "Numerics:", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", placeholder = "Select numeric(s)", multiple=T),
+      select2Input("factors", "Factors:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", placeholder = "Select factor(s)", multiple=T)
     ),
     
     div(class="accordion", id ="optionsAccordion", 
