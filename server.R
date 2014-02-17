@@ -1,4 +1,3 @@
-library(shiny)
 library(whisker)
 
 # Define server logic required to summarize and view the selected dataset
