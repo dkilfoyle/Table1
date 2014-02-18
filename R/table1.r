@@ -8,7 +8,7 @@ table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F,
   for (i in 1:nrow(selectedFields)) {
     table_data[[ selectedFields[i,1] ]] = 
       getDescriptionStatsBy(curdf[, selectedFields[i,1]], curdf[, colfactor], show_all_values=TRUE, hrzl_prop=T, html=TRUE, 
-                            add_total_col=add_total_col, statistics=statistics, NEJMstyle = NEJMStyle, digits=as.integer(selectedFields[i,2]))
+                            add_total_col=add_total_col, statistics=statistics, NEJMstyle = NEJMstyle, digits=as.integer(selectedFields[i,2]))
   }
   
   # Now merge everything into a matrix
@@ -47,6 +47,10 @@ table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F,
       n.cgroup = c(n.cgroup, 1)
       cgroup = c(cgroup, colOptions[i,3])
     }
+  }
+  if (statistics) { 
+    n.cgroup = c(n.cgroup,1) 
+    cgroup = c(cgroup, "")
   }
   
   if (all(cgroup==c(""))) cgroup=NULL
