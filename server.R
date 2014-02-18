@@ -41,6 +41,11 @@ shinyServer(function(input, output, session) {
     }
     
     session$sendInputMessage("tblColOptions", list(value=colOptions))
+    
+    if (length(levels(curdf[, colFactor]))>2)
+      disableControl("chkStatistics", session)
+    else
+      enableControl("chkStatistics", session)
 
   })
   

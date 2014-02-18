@@ -20,6 +20,7 @@ shinyUI(pageWithSidebar(
   
   sidebarPanel(
     
+    jsCodeHandler(),
     includeCSS("www/table1.css"),
     
     h2("Table1"),

@@ -12,8 +12,8 @@ melanoma$status <-
   factor(melanoma$status, 
          levels=c(2,1,3),
          labels=c("Alive", # Reference
-                  "Melanoma death", 
-                  "Non-melanoma death"))
+                  "Melanoma", 
+                  "Non-melanoma"))
 
 melanoma$sex <- 
   factor(melanoma$sex,
