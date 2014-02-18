@@ -1,5 +1,6 @@
 library(shiny)
 library(shinyAce)
+library(whisker)
 source("R/dkdfinfo.r")
 source("R/lib.r")
 source("R/melanoma.r")

@@ -1,5 +1,3 @@
-library(whisker)
-
 # Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output, session) {
   
@@ -126,7 +124,7 @@ shinyServer(function(input, output, session) {
         colOptions = paste(deparse(colOptions), collapse=""),
         colN = input$chkColN
       )
-      updateAceEditor(session, "acer", value = whisker.render(template, whiskerdata), mode="r")
+      updateAceEditor(session, "acer", value = whisker.render(template, whiskerdata), mode="markdown")
     })
     
     return(x)

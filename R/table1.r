@@ -27,6 +27,8 @@ table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F,
     headings = sapply(colnames(output_data), function(x) {
       if (x=="Total")
         paste0(x, " (n=", nrow(curdf), ")")
+      else if (x=="p-value")
+        paste0(x)
       else
         paste0(x, " (n=", sum(curdf[, colfactor]==x), ")")
     })
@@ -53,6 +55,7 @@ table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F,
   if (add_total_col) align="c" else align=""
   for (i in 1:nrow(colOptions))
     align = paste0(align, colOptions[i,2])
+  if (statistics) align=paste0(align, "c")
   
   x = htmlTable(output_data, align=align,
                 rgroup=rgroup, n.rgroup=n.rgroup, 
