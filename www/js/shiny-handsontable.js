@@ -17,7 +17,12 @@ var tableInputBinding = new Shiny.InputBinding();
     },
     
     subscribe: function(el, callback) {
-      $(el).on('change.dataTable', function(e) { callback(); });
+      //(el).on('change.dataTable', function(e) { callback(); });
+      $(el).handsontable({
+        afterChange: function(changes, source) {
+         callback();
+        }
+      })
     },
     
     unsubscribe: function(el) {

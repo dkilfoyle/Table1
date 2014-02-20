@@ -55,8 +55,7 @@ shinyUI(pageWithSidebar(
                               p(),
                               spreadsheetInput("tblColOptions", rbind(c("","","")), 
                                                colHeaders='["Name","Justify","Group"]',
-                                               options='columns: [ {}, {type: "dropdown", source: ["c","l","r"] }, {} ],
-                                                        afterChange: function() { $(".dataTable").trigger("change"); }')
+                                               options='columns: [ {}, {type: "dropdown", source: ["c","l","r"] }, {} ]')
                               ),
                            expanded=T),
             buildAccordion("Row Options", "rowoptions", "", tagList(
