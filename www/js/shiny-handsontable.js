@@ -17,11 +17,11 @@ var tableInputBinding = new Shiny.InputBinding();
     },
     
     subscribe: function(el, callback) {
-      $(el).on('change.tableInputBinding', function(e) { callback(); });
+      $(el).on('change.dataTable', function(e) { callback(); });
     },
     
     unsubscribe: function(el) {
-      $(el).off('.tableInputBinding')
+      $(el).off('.dataTable')
     },
     
     receiveMessage: function(el, data) {

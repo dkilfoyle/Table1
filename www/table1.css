@@ -8,3 +8,7 @@
 .accordion-toggle {
   background-color: gainsboro;
 }
+
+.handsontable.listbox {
+  bottom: 5em;
+}

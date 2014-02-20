@@ -53,7 +53,10 @@ shinyUI(pageWithSidebar(
                               checkboxInput("chkNEJM", "NEJM Style n (%)", T),
                               checkboxInput("chkColN", "N= in column header", T),
                               p(),
-                              spreadsheetInput("tblColOptions", rbind(c("","","")), colHeaders='["Name","Justify","Group"]')
+                              spreadsheetInput("tblColOptions", rbind(c("","","")), 
+                                               colHeaders='["Name","Justify","Group"]',
+                                               options='columns: [ {}, {type: "dropdown", source: ["c","l","r"] }, {} ],
+                                                        afterChange: function() { $(".dataTable").trigger("change"); }')
                               ),
                            expanded=T),
             buildAccordion("Row Options", "rowoptions", "", tagList(
