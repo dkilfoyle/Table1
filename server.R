@@ -82,7 +82,7 @@ shinyServer(function(input, output, session) {
     
     # first get the current optionsselections from the handsontable
     if (!is.null(input$tblColOptions))
-      colOptions = t(sapply(fromJSON(input$tblColOptions),paste)) #for (x in fromJSON(input$tblColOptions)) colOptions = rbind(colOptions, x, deparse.level=0)
+      colOptions = t(sapply(fromJSON(input$tblColOptions),paste)) 
     
     return(colOptions)
     
