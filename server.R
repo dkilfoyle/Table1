@@ -54,7 +54,7 @@ shinyServer(function(input, output, session) {
     
     # first get the current selections from the handsontable
     if (!is.null(input$tblRowOptions))
-      for (x in fromJSON(input$tblRowOptions)) selectedFields = rbind(selectedFields, x, deparse.level=0)
+      selectedFields = t(sapply(fromJSON(input$tblRowOptions),paste))
     
     # add new selections from the field lists
     newSelection = which(!(c(input$numerics, input$factors) %in% selectedFields[,1]))
@@ -82,7 +82,7 @@ shinyServer(function(input, output, session) {
     
     # first get the current optionsselections from the handsontable
     if (!is.null(input$tblColOptions))
-      for (x in fromJSON(input$tblColOptions)) colOptions = rbind(colOptions, x, deparse.level=0)
+      colOptions = t(sapply(fromJSON(input$tblColOptions),paste)) #for (x in fromJSON(input$tblColOptions)) colOptions = rbind(colOptions, x, deparse.level=0)
     
     return(colOptions)
     
