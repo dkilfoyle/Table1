@@ -42,7 +42,9 @@ select2Input <- function(inputId, label, choices = NULL, selected = NULL, placeh
     singleton(tags$head(tags$script(src="js/jquery-ui-1.10.3.custom.min.js"))),
     singleton(tags$head(tags$script(src="js/select2.sortable.js"))),
     
-    selectInput(inputId, label, choices, selected, ...),
+    # don't use Shiny 0.9+'s selectize as it clashses with select2
+    # can't use selectize as it doesn't support sorting and reordering of selections
+    selectInput(inputId, label, choices, selected, selectize=F, ...),
     tags$script(sprintf("$(function() { $('#%s').select2({width:'resolve', placeholder:'%s'}); $('#%s').select2Sortable(); })", inputId, placeholder, inputId))
 
   )

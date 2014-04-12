@@ -53,7 +53,8 @@ table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F,
     cgroup = c(cgroup, "")
   }
   
-  if (all(cgroup==c(""))) cgroup=NULL
+  # new version of GMisc uses missing instead of null for empty options
+  #if (all(cgroup==c(""))) cgroup=NULL
   
   # build column alignment from colOptions
   if (add_total_col) align="c" else align=""
