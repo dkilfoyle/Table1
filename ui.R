@@ -20,6 +20,7 @@ shinyUI(pageWithSidebar(
   
   sidebarPanel(
     
+    includeScript("www/js/jquery-ui-1.10.3.custom.min.js"),
     jsCodeHandler(),
     includeCSS("www/table1.css"),
     
@@ -28,21 +29,23 @@ shinyUI(pageWithSidebar(
     p("An interface to the Gmisc htmlTable function"),
     
     wellPanel(
-      select2Input("dataset", "Dataframe:", choices = getDataFrames(), placeholder="Select Dataframe")
+      selectInput("dataset", "Dataframe:", choices = getDataFrames())
     ),
     
     wellPanel(
       p(helpText("Select the factor variable that will produce the columns, ",
                  "typically the Cases vs Controls ID var."
                  ),
-      select2Input("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="",  multiple=F)
+      selectInput("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="",  multiple=F)
       )),
     
     wellPanel(
       p(helpText("Select the numerics and factors to include ",
                "in the rows of the table.")),
-      select2Input("numerics", "Numerics:", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", placeholder = "Select numeric(s)", multiple=T),
-      select2Input("factors", "Factors:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", placeholder = "Select factor(s)", multiple=T)
+      selectizeInput("numerics", "Numerics:", choices=getdfinfo(getDataFrames()[1])$numerics$name, selected="", multiple=T, 
+                     options=list(placeholder="Select numeric(s)", dropdownParent = "body", plugins=list(remove_button="", drag_drop=""))),
+      selectizeInput("factors", "Factors:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="", multiple=T, 
+                     options=list(placeholder="Select factor(s)", dropdownParent = "body", plugins=list(remove_button="", drag_drop="")))
     ),
     
     div(class="accordion", id ="optionsAccordion", 
