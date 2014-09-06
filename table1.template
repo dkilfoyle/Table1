@@ -3,7 +3,7 @@ source("table1.R")
 ```
 Here is the table
 
-```{r table1, results='as.is'}
+```{r table1, results='asis'}
 selectedFields = {{{selectedFields}}}
 colOptions = {{{colOptions}}}
 cat(table1({{curdf}}, "{{colfactor}}", selectedFields, colOptions, 
