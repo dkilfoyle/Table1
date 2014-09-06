@@ -36,7 +36,7 @@ shinyUI(pageWithSidebar(
       p(helpText("Select the factor variable that will produce the columns, ",
                  "typically the Cases vs Controls ID var."
                  ),
-      selectInput("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, selected="",  multiple=F)
+      selectInput("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, multiple=F)
       )),
     
     wellPanel(

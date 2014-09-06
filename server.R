@@ -22,11 +22,10 @@ shinyServer(function(input, output, session) {
     dfinfo = getDFInfo()
     
     # update colFactor
-    updateSelectInput(session, "colFactor", "", choices=dfinfo$factors$name, selected=dfinfo$factors$name[1])
-    
+    updateSelectInput(session, "colFactor", choices=dfinfo$factors$name)
     # Update the field selects
-    updateSelectInput(session, "numerics", "", choices=dfinfo$numerics$name, selected="")
-    updateSelectInput(session, "factors", "", choices=dfinfo$factors$name, selected="")
+    updateSelectInput(session, "numerics", choices=dfinfo$numerics$name)
+    updateSelectInput(session, "factors", choices=dfinfo$factors$name)
     
   }, priority=1)
   
