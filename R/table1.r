@@ -6,10 +6,15 @@ table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F,
   # Get the basic stats and store in a list
   table_data <- list()
   for (i in 1:nrow(selectedFields)) {
+    x = curdf[, selectedFields[i,1]]
+    label(x) = selectedFields[i,1]
+    # TODO: Why is "mean(sd)" disappearing when no total column??
     table_data[[ selectedFields[i,1] ]] = 
-      getDescriptionStatsBy(curdf[, selectedFields[i,1]], curdf[, colfactor], show_all_values=TRUE, hrzl_prop=T, html=TRUE, 
+      getDescriptionStatsBy(x, curdf[, colfactor], show_all_values=TRUE, hrzl_prop=T, html=TRUE, 
                             add_total_col=add_total_col, statistics=statistics, NEJMstyle = NEJMstyle, digits=as.integer(selectedFields[i,2]))
   }
+   
+  print(table_data)
   
   # Now merge everything into a matrix
   # and create the rgroup & n.rgroup variabels
