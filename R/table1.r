@@ -1,20 +1,20 @@
 suppressMessages(library(Gmisc))
 
 table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F, statistics=F, NEJMstyle=F, digits=2, colN=F, 
-                  caption="", caption.loc="b", tfoot="") {
+                  caption="", caption.loc="b", tfoot="", continuous_fn=describeMean) {
   
   # Get the basic stats and store in a list
   table_data <- list()
   for (i in 1:nrow(selectedFields)) {
-    x = curdf[, selectedFields[i,1]]
-    label(x) = selectedFields[i,1]
     # TODO: Why is "mean(sd)" disappearing when no total column??
+
     table_data[[ selectedFields[i,1] ]] = 
-      getDescriptionStatsBy(x, curdf[, colfactor], show_all_values=TRUE, hrzl_prop=T, html=TRUE, 
+      getDescriptionStatsBy(curdf[, selectedFields[i,1]], curdf[, colfactor], show_all_values=TRUE, hrzl_prop=T, html=TRUE, 
+                            continuous_fn = continuous_fn,
                             add_total_col=add_total_col, statistics=statistics, NEJMstyle = NEJMstyle, digits=as.integer(selectedFields[i,2]))
   }
    
-  print(table_data)
+  #print(table_data)
   
   # Now merge everything into a matrix
   # and create the rgroup & n.rgroup variabels

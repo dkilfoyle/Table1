@@ -62,7 +62,8 @@ shinyUI(pageWithSidebar(
                               ),
                            expanded=T),
             buildAccordion("Row Options", "rowoptions", "", tagList(
-                              spreadsheetInput("tblRowOptions", rbind(c("","")), colHeaders='["Name","Digits"]')
+                              spreadsheetInput("tblRowOptions", rbind(c("","")), colHeaders='["Name","Digits"]'),
+                              radioButtons("describeNumeric", "Numeric statistic:", choices=c("Mean","Median"), selected="Mean", inline=T)
                             ),
                            expanded=F),
             buildAccordion("Table Options", "tableoptoins", "", tagList(

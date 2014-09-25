@@ -99,6 +99,11 @@ shinyServer(function(input, output, session) {
     colfactor = input$colFactor
     curdf = getSelectedDF()
     
+    if (input$describeNumeric == "Mean")
+      mycontinuous_fn = describeMean
+    else
+      mycontinuous_fn = describeMedian
+    
     x = table1(curdf, colfactor, selectedFields, colOptions, 
                add_total_col = input$chkTotals,
                statistics = input$chkStatistics,
@@ -106,7 +111,8 @@ shinyServer(function(input, output, session) {
                colN = input$chkColN,
                caption = input$txtCaption,
                caption.loc = input$txtCapLoc,
-               tfoot = input$txtFooter
+               tfoot = input$txtFooter, 
+               continuous_fn = mycontinuous_fn
                )
     
     observe({

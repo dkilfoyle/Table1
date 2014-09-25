@@ -9,6 +9,11 @@
   background-color: gainsboro;
 }
 
+.handsontable {
+  margin-bottom: 10px;
+}
+
 .handsontable.listbox {
   bottom: 5em;
 }
+
