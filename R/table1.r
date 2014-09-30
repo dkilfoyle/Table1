@@ -22,7 +22,10 @@ table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F,
   n.rgroup <- c()
   output_data <- NULL
   for (varlabel in names(table_data)){
-    output_data <- rbind(output_data, table_data[[varlabel]])
+    x = table_data[[varlabel]]
+    if (grepl("curdf", rownames(x))) # hack - ? bug in gmisc, different behaviour of getDescriptionStats if total column present or not
+      rownames(x) = "Mean (SD)" 
+    output_data <- rbind(output_data, x)
     rgroup <- c(rgroup, varlabel)
     n.rgroup <- c(n.rgroup, nrow(table_data[[varlabel]]))
   }

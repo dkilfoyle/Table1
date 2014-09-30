@@ -4,7 +4,7 @@ library(whisker)
 source("R/dkdfinfo.r")
 source("R/lib.r")
 source("R/melanoma.r")
-source("R/table1.r")
+
 
 # to run
 # shiny:::runApp()

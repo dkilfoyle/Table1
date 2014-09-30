@@ -1,3 +1,5 @@
+source("R/table1.r")
+
 # Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output, session) {
   
