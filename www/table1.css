@@ -1,7 +1,46 @@
-.gmisc_table {
+.gmisc_table40 {
+    width:40%;
+    border: 0;
+    outline: 0;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
+}
+
+.gmisc_table60 {
+    width:60%;
+    border: 0;
+    outline: 0;
+        margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
+}
+
+.gmisc_table80 {
     width:80%;
     border: 0;
     outline: 0;
+        margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
+}
+
+.gmisc_table100 {
+    width:100%;
+    border: 0;
+    outline: 0;
+        margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
+}
+
+.gmisc_table {
+    width:100%;
+    border: 0;
+    outline: 0;
+        margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
 }
 
 .panel-body {

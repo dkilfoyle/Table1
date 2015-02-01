@@ -106,6 +106,8 @@ shinyServer(function(input, output, session) {
     else
       mycontinuous_fn = describeMedian
     
+    tableCSSclass = paste0("gmisc_table", substr(input$radTableWidth,1,2))
+    
     x = table1(curdf, colfactor, selectedFields, colOptions, 
                add_total_col = input$chkTotals,
                statistics = input$chkStatistics,
@@ -114,7 +116,8 @@ shinyServer(function(input, output, session) {
                caption = input$txtCaption,
                caption.loc = input$txtCapLoc,
                tfoot = input$txtFooter, 
-               continuous_fn = mycontinuous_fn
+               continuous_fn = mycontinuous_fn,
+               tableCSSclass = tableCSSclass
                )
     
     observe({

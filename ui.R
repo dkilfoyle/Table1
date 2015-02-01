@@ -15,7 +15,7 @@ data(iris)
 # Define UI for dataset viewer application
 shinyUI(fluidPage(
   
-  titlePanel("Table1: An interface to the Gmisc htmlTable function"),
+  titlePanel("Table1"),
   
   sidebarLayout(
     sidebarPanel(
@@ -65,7 +65,7 @@ shinyUI(fluidPage(
           textInput("txtCaption", "Caption:"),
           textInput("txtCapLoc", "Caption Location:", "top"),
           textInput("txtFooter", "Footer:"),
-          radioButtons("radTableWidth", "Table Width", choice=c("40%","60%","80%","100%"))
+          radioButtons("radTableWidth", "Table Width", choices=c("40%","60%","80%","100%"), selected="80%")
         )
       ) # accordion
     ), # end sidebarpanel

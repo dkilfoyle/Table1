@@ -1,7 +1,7 @@
 suppressMessages(library(Gmisc))
 
 table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F, statistics=F, NEJMstyle=F, digits=2, colN=F, 
-                  caption="", caption.loc="b", tfoot="", continuous_fn=describeMean) {
+                  caption="", caption.loc="b", tfoot="", continuous_fn=describeMean, tableCSSclass="gmisc_table") {
   
   # Get the basic stats and store in a list
   table_data <- list()
@@ -81,7 +81,9 @@ table1 = function(curdf, colfactor, selectedFields, colOptions, add_total_col=F,
                 caption.loc = caption.loc,
                 tfoot=tfoot, 
                 ctable=TRUE,
-                output=F)
+                output=F,
+                tableCSSclass = tableCSSclass
+    )
   
   return(x)
 }
