@@ -20,8 +20,8 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       
-      includeScript("www/js/jquery-ui-1.10.3.custom.min.js"),
       includeCSS("www/table1.css"),
+      includeScript("www/js/jquery-ui-1.10.3.custom.min.js"),
       jsCodeHandler(),
       
       wellPanel(
@@ -32,8 +32,7 @@ shinyUI(fluidPage(
       
       wellPanel(
         p(helpText("Select the factor variable that will produce the columns, ",
-          "typically the Cases vs Controls ID var."
-        ),
+          "typically the Cases vs Controls ID var."),
           selectInput("colFactor","Columns Variable:", choices=getdfinfo(getDataFrames()[1])$factors$name, multiple=F)
         )),
       
@@ -46,32 +45,29 @@ shinyUI(fluidPage(
           options=list(placeholder="Select factor(s)", dropdownParent = "body", plugins=list(remove_button="", drag_drop="")))
       ),
       
-      div(class="accordion", id ="optionsAccordion", 
-        div(class="accordion-group", id = "optionsAccordionGroup", 
-          buildAccordion("Column Options", "coloptions", "", tagList(
-            checkboxInput("chkStatistics", "Show Statistics", F),
-            checkboxInput("chkTotals", "Show Total Column", T),
-            checkboxInput("chkNEJM", "NEJM Style n (%)", T),
-            checkboxInput("chkColN", "N= in column header", T),
-            p(),
-            spreadsheetInput("tblColOptions", rbind(c("","","")), 
-              colHeaders='["Name","Justify","Group"]',
-              options='columns: [ {}, {type: "dropdown", source: ["c","l","r"] }, {} ]')
-          ),
-            expanded=T),
-          buildAccordion("Row Options", "rowoptions", "", tagList(
-            spreadsheetInput("tblRowOptions", rbind(c("","")), colHeaders='["Name","Digits"]'),
-            radioButtons("describeNumeric", "Numeric statistic:", choices=c("Mean","Median"), selected="Mean", inline=T)
-          ),
-            expanded=F),
-          buildAccordion("Table Options", "tableoptoins", "", tagList(
-            textInput("txtCaption", "Caption:"),
-            textInput("txtCapLoc", "Caption Location:", "top"),
-            textInput("txtFooter", "Footer:")),
-            expanded=F
-          )
+      p("Options:"),
+      accordion("optionsAccordion", 
+        accordionPanel("Column",
+          checkboxInput("chkStatistics", "Show Statistics", F),
+          checkboxInput("chkTotals", "Show Total Column", T),
+          checkboxInput("chkNEJM", "NEJM Style n (%)", T),
+          checkboxInput("chkColN", "N= in column header", T),
+          p(),
+          spreadsheetInput("tblColOptions", rbind(c("","","")), 
+            colHeaders='["Name","Justify","Group"]',
+            options='columns: [ {}, {type: "dropdown", source: ["c","l","r"] }, {} ]')
+        ), 
+        accordionPanel("Row", 
+          spreadsheetInput("tblRowOptions", rbind(c("","")), colHeaders='["Name","Digits"]'),
+          radioButtons("describeNumeric", "Numeric statistic:", choices=c("Mean","Median"), selected="Mean", inline=T)
+        ),
+        accordionPanel("Table",
+          textInput("txtCaption", "Caption:"),
+          textInput("txtCapLoc", "Caption Location:", "top"),
+          textInput("txtFooter", "Footer:"),
+          radioButtons("radTableWidth", "Table Width", choice=c("40%","60%","80%","100%"))
         )
-      ) # div accordion
+      ) # accordion
     ), # end sidebarpanel
     
     mainPanel(
@@ -88,4 +84,3 @@ shinyUI(fluidPage(
     ) # mainpanel
   ) # sidebarLayout
 ))
-  

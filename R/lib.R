@@ -33,34 +33,41 @@ spreadsheetInput <- function(inputId = "exampleGrid", value, colHeaders="true", 
   )
 }
 
-# LEGACY CODE - now use Shiny 0.9+ selectize with drag_drop plugin
-# select2Input <- function(inputId, label, choices = NULL, selected = NULL, placeholder = "", ...) {
-# 
-#   tagList(
-#     
-#     singleton(tags$head(tags$link(href="js/select2/select2.css",rel="stylesheet",type="text/css"))),
-#     singleton(tags$head(tags$script(src="js/select2/select2.js"))),
-#     singleton(tags$head(tags$script(src="js/jquery-ui-1.10.3.custom.min.js"))),
-#     singleton(tags$head(tags$script(src="js/select2.sortable.js"))),
-#     
-#     # don't use Shiny 0.9+'s selectize as it clashses with select2
-#     # can't use selectize as it doesn't support sorting and reordering of selections
-#     selectInput(inputId, label, choices, selected, selectize=F, ...),
-#     tags$script(sprintf("$(function() { $('#%s').select2({width:'resolve', placeholder:'%s'}); $('#%s').select2Sortable(); })", inputId, placeholder, inputId))
-# 
+accordion = function(name, ...) {
+  div(class="panel-group", id = name, role="tablist", ...)
+}
+
+# accordionPanel = function(title, ..., expanded=F) {
+#   inclass = ifelse(expanded, "in", "")
+#   myitemid = paste0("collapse", make.names(title))
+#   
+#   div(class="panel panel-default", 
+#     div(class="panel-heading", role="tab",
+#       h4(class="panel-title", 
+#         HTML(paste('<a class="collapsed" data-toggle="collapse" href="#', myitemid, '">', title,'</a>', sep=""))
+#       )
+#     ), # panel-heading
+#     div(id = myitemid, class=paste("panel-collapse collapse", inclass), role="tabpanel",
+#       div(class="panel-body", ...)
+#     ) # panel-collapse
 #   )
 # }
 
-buildAccordion = function(label, name, dataparent, item, expanded=F) {
+accordionPanel = function(title, ..., dataparent, expanded=F) {
   inclass = ifelse(expanded, "in", "")
-  tagList(
-    div(class="accordion-heading", 
-        HTML(paste('<a class="accordion-toggle" data-toggle="collapse" data-parent="', dataparent, '" href="#collapse',name,'">',label,'</a>', sep=""))
-    ),
-    
-    div(id=paste("collapse",name,sep=""), class=paste("accordion-body collapse", inclass),
-        div(class="accordion-inner", lapply(item, function(x) x))
-    )
+  mydataparent = ifelse(missing(dataparent), "", paste0('data-parent="#', dataparent, '"'))
+  myitemid = paste0("collapse", make.names(title))
+  
+  div(class="panel panel-default", 
+    div(class="panel-heading", role="tab",
+      h4(class="panel-title", 
+        #a(datatoggle="collapse", dataparent=mydataparent, href=paste0("#", myitemid), title)
+        HTML(paste('<a class="collapsed" data-toggle="collapse" ', mydataparent, ' href="#', myitemid, '">', title,'</a>', sep=""))
+      )
+    ), # panel-heading
+    div(id = myitemid, class=paste("panel-collapse collapse", inclass), role="tabpanel",
+      div(class="panel-body", ...)
+    ) # panel-collapse
   )
 }
 

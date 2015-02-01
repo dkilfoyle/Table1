@@ -1,12 +1,32 @@
 .gmisc_table {
-    width:100%;
+    width:80%;
     border: 0;
     outline: 0;
 }
 
-.accordion-heading
-.accordion-toggle {
-  background-color: gainsboro;
+.panel-body {
+  background-color: rgb(245,245,245);
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.panel-default>.panel-heading {
+  background-color: rgb(230,230,230);
+}
+
+.panel-heading a:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+
+    float: right;        /* adjust as needed */
+    color: grey;         /* adjust as needed */
+}
+
+.panel-heading a.collapsed:after {
+    /* symbol for "collapsed" panels */
+        content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+
 }
 
 .handsontable {
@@ -17,3 +37,10 @@
   bottom: 5em;
 }
 
+.nav {
+  margin-bottom: 10px;
+}
+
+.tab-pane {
+  margin-top: 20px;
+}
