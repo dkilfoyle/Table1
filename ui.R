@@ -5,6 +5,8 @@ source("R/dkdfinfo.r")
 source("R/lib.r")
 source("R/melanoma.r")
 
+if (packageVersion("shiny") < "0.11")
+  stop("Need shiny version >= 0.11 for bootstrap 3")
 
 # to run
 # shiny:::runApp()
