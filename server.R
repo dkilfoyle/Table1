@@ -133,11 +133,12 @@ shinyServer(function(input, output, session) {
         curdf = input$dataset,
         colfactor = input$colFactor,
         caption = input$txtCaption,
-        captionloc = input$txtCapLoc,
+        pos.caption = input$txtCapLoc,
         tfoot = input$txtFooter,
         selectedFields = paste(deparse(selectedFields), collapse=""),
         colOptions = paste(deparse(colOptions), collapse=""),
-        colN = input$chkColN
+        colN = input$chkColN,
+        css.class = css.class
       )
       updateAceEditor(session, "acer", value = whisker.render(template, whiskerdata), mode="markdown")
     })

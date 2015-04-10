@@ -9,6 +9,8 @@ colOptions = {{{colOptions}}}
 cat(table1({{curdf}}, "{{colfactor}}", selectedFields, colOptions, 
            add_total_col = {{add_total_col}}, statistics = {{statistics}}, NEJMstyle = {{NEJMstyle}}, colN = {{colN}},
            caption="{{{caption}}", 
-           caption.loc = "{{captionloc}}",
-           tfoot="{{tfoot}}"))
+           pos.caption = "{{pos.caption}}",
+           tfoot="{{tfoot}}",
+           
+          css.class = "{{css.class}}",))
 ```
