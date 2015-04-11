@@ -102,9 +102,15 @@ shinyServer(function(input, output, session) {
     curdf = getSelectedDF()
     
     if (input$describeNumeric == "Mean")
+    {
       mycontinuous_fn = describeMean
+      mycontinuous_fns = "describeMean"
+    }
     else
+    {
       mycontinuous_fn = describeMedian
+      mycontinuous_fns = "describeMedian"
+    }
     
     css.class = paste0("gmisc_table", substr(input$radTableWidth,1,2))
     
@@ -137,6 +143,7 @@ shinyServer(function(input, output, session) {
         tfoot = input$txtFooter,
         selectedFields = paste(deparse(selectedFields), collapse=""),
         colOptions = paste(deparse(colOptions), collapse=""),
+        continuous_fn = mycontinuous_fns,
         colN = input$chkColN,
         css.class = css.class
       )

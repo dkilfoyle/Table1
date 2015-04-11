@@ -11,6 +11,6 @@ cat(table1({{curdf}}, "{{colfactor}}", selectedFields, colOptions,
            caption="{{{caption}}", 
            pos.caption = "{{pos.caption}}",
            tfoot="{{tfoot}}",
-           
-          css.class = "{{css.class}}",))
+           continuous_fn={{continuous_fn}},
+           css.class = "{{css.class}}",))
 ```
