@@ -38,7 +38,7 @@ shinyServer(function(input, output, session) {
     
     colOptions = rbind()
     for (x in levels(curdf[, colFactor])) {
-      colOptions = rbind(colOptions, c(x, "c", ""))
+      colOptions = rbind(colOptions, c(x, "c", colFactor))
     }
     
     session$sendInputMessage("tblColOptions", list(value=colOptions))
